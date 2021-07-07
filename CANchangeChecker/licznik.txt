@@ -1,0 +1,3 @@
+Poprzedni stan bitu : 0
+Ostatnie uruchomienie : 2021-07-00 14:00:00
+Liczba kompilacji : 0
