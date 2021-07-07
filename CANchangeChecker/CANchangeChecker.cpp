@@ -11,15 +11,36 @@ string constructCANMethod(char lastSetBit) {
 
 
     string output;
-
+    BLINK_BIT_NEW = (lastSetBit == '0') ? '1' : '0';
     output += CAN_METHOD_BEGINNING;
     output += "       tByte dataBlink = ";
-    output += lastSetBit;
-    output += "\n";
+    output += BLINK_BIT_NEW;
+    output += ";\n";
     output += CAN_METHOD_END;
 
     return output;
 
+}
+
+char readCompileNumber(void) {
+
+    fstream configFile(PATH_CONFIG_FILE);
+    string line;
+
+    if (configFile.is_open()) {
+
+        while (getline(configFile, line)) {
+
+            if (line.rfind('L', 0) == 0) {
+
+                int index = stoi(line.substr(19, string::npos));
+                return index;
+            }
+        }
+
+    }
+
+    return -1;
 }
 
 
@@ -65,11 +86,25 @@ bool insertMethodInCode(char lastSetBit) {
 
 
 
-void updateConfig(void) {
+bool updateConfig(void) {
 
+    fstream configFile(PATH_CONFIG_FILE);
+    string line;
 
+    
+
+    if (configFile.is_open()) {
+
+        configFile << "Poprzedni stan bitu : " << BLINK_BIT_OLD << "\n";
+        configFile << "Liczba kompilacji : " << readCompileNumber() + 1;
+        return 1;
+        
+    }
+
+    return 0;
 
 }
+
 
 char readLastSetBit(void) {
 
@@ -101,19 +136,37 @@ int main()
    
 
 
-    char lastSetBit = readLastSetBit();
+    BLINK_BIT_OLD = readLastSetBit();
 
-    if (lastSetBit != '1' && lastSetBit != '0') {
+    if (BLINK_BIT_OLD != '1' && BLINK_BIT_OLD != '0') {
         cout << "BŁĄD ODCZYTU WARTOŚCI OSTATNIEGO USTAWIONEGO BITA Z config.txt, PRZERYWANIE KOMPILACJI...";
-        return -1;
+        //return -1;
+        while (true) {
+
+        }
     }
 
-    if (insertMethodInCode(lastSetBit)) {
-
-    }
-    else {
+    if (!insertMethodInCode(BLINK_BIT_OLD)) {
         cout << "BŁĄD MODYFIKACJI PLIKU NAGŁÓWKOWEGO";
+        while (true) {
+
+        }
+        //return -1;
     }
+
+   runCompilator();
+
+
+    if (!updateConfig()) {
+        cout << "BŁĄD PRZY AKTUALIZACJI licznik.txt";
+        while (true) {
+
+        }
+        //return -1;
+    }
+
+
+    
 
         
     
