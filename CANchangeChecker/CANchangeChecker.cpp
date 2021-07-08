@@ -4,22 +4,7 @@
 #include "ConfigFunctions.h"
 #include "HeaderFunctions.h"
 
-
 using namespace std;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -30,9 +15,6 @@ void runCompilator(void) {
 
     system("start make.exe");
 }
-
-
-
 
 
 int main()
@@ -49,8 +31,6 @@ int main()
     }
         
     system("pause");
-   
-
     return 0;
 }
 

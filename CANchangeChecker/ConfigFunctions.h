@@ -5,9 +5,43 @@
 #include <string>
 
 
-
-
 // TODO : metoda tworz¹ca podstawowy licznik.txt
+
+void createConfig(void) {
+
+    std::ifstream headerFile(PATH_HEADER_FILE);
+
+    std::string line;
+    bool find_BLINK_BIT = false;
+
+    try {
+        if (headerFile.is_open()) {
+
+            // When there is no 'licznik.txt' file we must check if CANMethod is already inserted in code
+            // if yes : BLINK_BIT_CURRENT value becomes value read
+            // if no : BLINK_BIT_CURRENT value becomes 0
+            while (std::getline(headerFile, line)) {
+
+                if (line.rfind("dataBlink") != std::string::npos) {
+                    int comaIndex = line.rfind(';');
+                    config_data_container.BLINK_BIT_CURRENT = std::stoi( line.substr(comaIndex-2, comaIndex-1) );
+                    break;
+                }
+            }
+
+            config_data_container.NUMBER_COMPILE = 0;
+            std::cout << "NEW 'licznik.txt' CREATED WITH SUCCESS\n\n";
+
+        }
+        else {
+            throw std::runtime_error("Could not open file");
+        }
+    }
+    catch (std::runtime_error e) {
+        std::cout << "ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n\n";
+        ERROR_STATUS = true;
+    }
+}
 
 
 
@@ -58,8 +92,8 @@ void readConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        std::cout << "COULD NOT OPEN FILE './licznik.txt' \n - DOES IT EXIST ON THE SAME LEVEL AS THIS .EXE?\n\n";
-        ERROR_STATUS = true;
+        std::cout << "COULD NOT OPEN FILE './licznik.txt' \nATTEMPTING ON CREATING NEW ONE...\n\n";
+        createConfig();
     }
 }
 
@@ -71,7 +105,7 @@ void updateConfig(void) {
     if (ERROR_STATUS)
         return;
 
-    std::fstream configFile(PATH_CONFIG_FILE);
+    std::ofstream configFile(PATH_CONFIG_FILE);
     std::string line;
 
     try {
