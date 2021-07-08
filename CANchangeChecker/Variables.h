@@ -6,12 +6,20 @@
 
 
 
-//#define PATH_HEADER_FILE "./inc/CustomCANTx.h"
-#define PATH_HEADER_FILE "./original.txt"
+#define PATH_HEADER_FILE "./inc/CustomCANTx.h"
+//#define PATH_HEADER_FILE "./original.txt"
 #define PATH_CONFIG_FILE "./licznik.txt"
 
 
-bool blinkBit = false;
+char BLINK_BIT_OLD;
+char BLINK_BIT_NEW;
+
+
+struct configurationData {
+
+	int NUMBER_COMPILE;
+	unsigned int BLINK_BIT_CURRENT;
+} config_data_container;
 
 
 
@@ -35,13 +43,13 @@ std::string CAN_METHOD_BEGINNING =		"// special function checking whether softwa
 										"   if(bSend != 0){                                                     \n";
 									
 
-std::string CAN_METHOD_END =			"       tByte data0 = 0                                                 \n"
+std::string CAN_METHOD_END =			"       tByte data0 = 0;                                                \n"
 										"                                                                       \n"
-										"       mTX.dwIdentifier = 0x400                                        \n"
-										"       mTX.bLength = 1                                                 \n"
-										"       mTX.bIs29Bit = 0                                                \n"
-										"       mTX.abData[0] = dataBlink                                       \n"
-										"       APIFTM_bSendCANMessage(&mTX)                                    \n"
+										"       mTX.dwIdentifier = 0x400;                                       \n"
+										"       mTX.bLength = 1;                                                \n"
+										"       mTX.bIs29Bit = 0;                                               \n"
+										"       mTX.abData[0] = dataBlink;                                      \n"
+										"       APIFTM_bSendCANMessage(&mTX);                                   \n"
 										"   }                                                                   \n"
 										"} \n";
 
