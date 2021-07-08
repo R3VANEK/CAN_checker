@@ -30,6 +30,9 @@ std::string constructCANMethod(unsigned int *BLINK_BIT_CURRENT) {
 
 void updateHeaderFile() {
 
+    if (ERROR_STATUS)
+        return;
+
     std::fstream programFile(PATH_HEADER_FILE);
     bool startCopying = false;
 
@@ -64,7 +67,8 @@ void updateHeaderFile() {
                 }
             }
             catch (std::runtime_error e) {
-                std::cout << "B£¥D : NIE UDA£O SIÊ ZMODYFIKOWAÆ PLIKU CustomCANTx.h";
+                std::cout << "ERROR : COULD NOT MODIFY FILE './inc/CustomCANTx.h' \n\n";
+                ERROR_STATUS = true;
             }
         }
         else {
@@ -73,7 +77,8 @@ void updateHeaderFile() {
     }
 
     catch (std::runtime_error e) {
-        std::cout << "B£¥D : NIE UDA£O OTWORZYÆ SIÊ PLIKU CustomCANTx.h, CZY PLIK NA PEWNO ZNAJDUJE SIÊ NA ŒCIE¯CE RELATYWNEJ ./inc ?";
+        std::cout << "ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n\n";
+        ERROR_STATUS = true;
     }
     
 }

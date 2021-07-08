@@ -7,7 +7,7 @@
 
 
 
-
+// TODO : metoda tworz¹ca podstawowy licznik.txt
 
 
 
@@ -30,7 +30,8 @@ void readConfig(void) {
                         config_data_container.NUMBER_COMPILE = std::stoi(line.substr(19, std::string::npos));
                 }
                 catch (std::invalid_argument a) {
-                    std::cout << "B£¥D : NIE UDA£O SIÊ ODCZYTAÆ LICZBY KOMPILACJI, CZY NA PEWNO WARTOŒÆ JEST TYPU LICZBOWEGO?";
+                    std::cout << "ERROR : COULD NOT READ COMPILE NUMBER FROM './licznik.txt' \n - NOT A NUMERIC VALUE\n\n";
+                    ERROR_STATUS = true;
                 }
 
                 try {
@@ -47,7 +48,8 @@ void readConfig(void) {
                         
                 }
                 catch (std::invalid_argument a) {
-                    std::cout << "B£¥D : NIE UDA£O SIÊ ODCZYTAÆ OBECNEGO BITU, CZY NA PEWNO WARTOŒÆ JEST TYPU LICZBOWEGO Z PRZEDZIA£U 0 ALBO 1?";
+                    std::cout << "ERROR : COULD NOT READ CURRENT BIT FROM './licznik.txt' \n - NOT A NUMERIC VALUE 0 OR 1\n\n";
+                    ERROR_STATUS = true;
                 }
             }
         }
@@ -56,7 +58,8 @@ void readConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        std::cout << "B£¥D : NIE UDA£O OTWORZYÆ SIÊ PLIKU licznik.txt, CZY PLIK NA PEWNO ZNAJDUJE SIÊ NA TAKIM SAMYM POZIOMIE FOLDERU?";
+        std::cout << "COULD NOT OPEN FILE './licznik.txt' \n - DOES IT EXIST ON THE SAME LEVEL AS THIS .EXE?\n\n";
+        ERROR_STATUS = true;
     }
 }
 
@@ -64,6 +67,9 @@ void readConfig(void) {
 
 
 void updateConfig(void) {
+
+    if (ERROR_STATUS)
+        return;
 
     std::fstream configFile(PATH_CONFIG_FILE);
     std::string line;
@@ -86,38 +92,12 @@ void updateConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        cout << "B£¥D : NIE UDA£O SIÊ ZMODYFIKOWAÆ PLIKU licznik.txt, PROGRAM SKOMPILOWANY PRAWID£OWO MIMO TO";
+        std::cout << "ERROR : COULD NOT MODIFY FILE 'licznik.txt'\n - DESPITE THAT './inc/CustomCANTx.h' WAS MODIFIED AND COMPILED WITH SUCCESS\n\n";
+        ERROR_STATUS = true;
     }
     
 }
 
 
-
-/*
-bool updateConfig(void) {
-
-    fstream configFile(PATH_CONFIG_FILE);
-    string line;
-
-
-
-    if (configFile.is_open()) {
-
-        string diodeColor = (BLINK_BIT_NEW == '0') ? "Kolor diody prawid³owo wgranego programu : CZERWONY\n" : "Kolor diody prawid³owego wgranego programu : ZIELONY\n";
-
-        configFile << "Poprzedni stan bitu : " << BLINK_BIT_OLD << "\n";
-        configFile << "Obecny stan bitu : " << BLINK_BIT_NEW << "\n";
-        configFile << "Liczba kompilacji : " << readCompileNumber() + 1;
-        configFile << "\n";
-        configFile << "\n";
-        configFile << "\n";
-        configFile << diodeColor;
-        return 1;
-
-    }
-
-    return 0;
-
-}*/
 
 #endif

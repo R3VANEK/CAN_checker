@@ -7,12 +7,10 @@
 
 
 #define PATH_HEADER_FILE "./inc/CustomCANTx.h"
-//#define PATH_HEADER_FILE "./original.txt"
 #define PATH_CONFIG_FILE "./licznik.txt"
 
 
-char BLINK_BIT_OLD;
-char BLINK_BIT_NEW;
+bool ERROR_STATUS = false;
 
 
 struct configurationData {
