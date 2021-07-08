@@ -68,18 +68,27 @@ void updateConfig(void) {
     std::fstream configFile(PATH_CONFIG_FILE);
     std::string line;
 
-    if (configFile.is_open()) {
+    try {
+        if (configFile.is_open()) {
 
-        std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT == 0) ? "Kolor diody prawid³owo wgranego programu : CZERWONY\n" : "Kolor diody prawid³owego wgranego programu : ZIELONY\n";
+            std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT == 0) ? "Kolor diody prawid³owo wgranego programu : CZERWONY\n" : "Kolor diody prawid³owego wgranego programu : ZIELONY\n";
 
-        //BLINK_BIT_CURRENT state is updated in constructCANMethod
-        configFile << "Obecny stan bitu : " << config_data_container.BLINK_BIT_CURRENT << "\n";
-        configFile << "Liczba kompilacji : " << config_data_container.NUMBER_COMPILE + 1;
-        configFile << "\n";
-        configFile << "\n";
-        configFile << "\n";
-        configFile << diodeColor;
+            //BLINK_BIT_CURRENT state is updated in constructCANMethod
+            configFile << "Obecny stan bitu : " << config_data_container.BLINK_BIT_CURRENT << "\n";
+            configFile << "Liczba kompilacji : " << config_data_container.NUMBER_COMPILE + 1;
+            configFile << "\n";
+            configFile << "\n";
+            configFile << "\n";
+            configFile << diodeColor;
+        }
+        else {
+            throw std::runtime_error("Cannot write to file");
+        }
     }
+    catch (std::runtime_error e) {
+        cout << "B£¥D : NIE UDA£O SIÊ ZMODYFIKOWAÆ PLIKU licznik.txt, PROGRAM SKOMPILOWANY PRAWID£OWO MIMO TO";
+    }
+    
 }
 
 
