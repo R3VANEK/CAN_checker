@@ -7,6 +7,8 @@
 
 // TODO : metoda tworz¹ca podstawowy licznik.txt
 
+
+// Creates new 'licznik.txt' file
 void createConfig(void) {
 
     std::ifstream headerFile(PATH_HEADER_FILE);
@@ -47,7 +49,8 @@ void createConfig(void) {
 
 
 
-
+// Reads data from existing 'licznik.txt' file
+// If it could not find it, it invokes createConfig() function
 void readConfig(void) {
 
     std::fstream configFile(PATH_CONFIG_FILE);
@@ -99,9 +102,11 @@ void readConfig(void) {
 
 
 
-
+// Updates 'licznik.txt' file about new BLINK_BIT_CURRENT state, compilation number and diode color
 void updateConfig(void) {
 
+
+    // if any previous function didn't executed properly this function is skipped
     if (ERROR_STATUS)
         return;
 

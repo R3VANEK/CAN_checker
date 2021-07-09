@@ -6,7 +6,8 @@
 #include <string>
 
 
-
+// create string that represents method for sending blinking bit
+// automatically inverts previous state of BLINK_BIT_CURRENT
 std::string constructCANMethod(unsigned int *BLINK_BIT_CURRENT) {
 
     *BLINK_BIT_CURRENT = !*BLINK_BIT_CURRENT;
@@ -27,11 +28,16 @@ std::string constructCANMethod(unsigned int *BLINK_BIT_CURRENT) {
 
 
 
-
+// insert into CustomCANTx.h custom function to send blink bit by CANID 0x400 made by constructCANMethod()
 void updateHeaderFile() {
 
+
+
+    // if any previous function didn't executed properly this function is skipped
     if (ERROR_STATUS)
         return;
+
+
 
     std::fstream programFile(PATH_HEADER_FILE);
     bool startCopying = false;
@@ -44,7 +50,7 @@ void updateHeaderFile() {
 
             while (getline(programFile, line)) {
 
-                //identify the first function in header file that isnt CANMethod
+                // identify the first function in header file that isnt CANMethod
                 // that first functon must start with letter 'f'
                 if (line.substr(0, 6) == "void f")
                     startCopying = true;
@@ -54,6 +60,15 @@ void updateHeaderFile() {
 
             }
             programFile.close();
+
+            try {
+                if (startCopying == false)
+                    throw std::runtime_error("Could not find function");
+            }
+            catch (std::runtime_error e) {
+                std::cout << "ERROR : COULD NOT MODIFY 'CustomCANTx.h'\n - COULD NOT FIND FUNCTION THAT STARTS WITH LETTER 'f'\n   (FIRST SPECIFIED FUNCTION BY USER MUST START WITH LETTER 'f')\n\n)";
+                ERROR_STATUS = true;
+            }
 
             try {
                 std::fstream programFile(PATH_HEADER_FILE);

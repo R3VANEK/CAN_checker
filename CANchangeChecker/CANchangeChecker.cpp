@@ -10,10 +10,12 @@ using namespace std;
 
 void runCompilator(void) {
 
+
+    // if any previous function didn't executed properly this function is skipped
     if (ERROR_STATUS)
         return;
 
-    system("start make.exe");
+    system("make.exe");
 }
 
 
@@ -21,12 +23,15 @@ int main()
 {
    
     readConfig();
+
     updateHeaderFile();
-    //runCompilator();
+
+    runCompilator();
+
     updateConfig();
 
     if (!ERROR_STATUS) {
-        cout << "MODIFIED AND COMPILED WITH SUCCESS\n";
+        cout << "\n\nPROGRAM MODIFIED AND COMPILED WITH SUCCESS\n";
         cout << "CHECK './licznik.txt' ABOUT SUCCESFULL UPLOAD LIGHT COLOR INFORMATION\n\n";
     }
         
