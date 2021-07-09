@@ -91,7 +91,7 @@ void updateHeaderFile() {
                     throw std::runtime_error("Could not find function");
             }
             catch (std::runtime_error e) {
-                std::cout << "  - COULD NOT MODIFY 'CustomCANTx.h'\n - COULD NOT FIND FUNCTION THAT STARTS WITH LETTER 'f'\n   - (FIRST SPECIFIED FUNCTION BY USER MUST START WITH LETTER 'f')";
+                MODIFICATION_ERROR_MESSAGE = "  - COULD NOT MODIFY 'CustomCANTx.h'\n  - COULD NOT FIND ANY USER-WRITTEN FUNCTION OF TYPE void\n  - IS CustomCANtX.h EMPTY?";
                 MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
             }
 
