@@ -76,7 +76,7 @@ void readConfig(void) {
                         config_data_container.NUMBER_COMPILE = std::stoi(line.substr(19, std::string::npos));
                 }
                 catch (std::invalid_argument a) {
-                    MODIFICATION_ERROR_MESSAGE = "  - COULD NOT READ COMPILE NUMBER FROM './licznik.txt' \n  - NOT A NUMERIC VALUE";
+                    MODIFICATION_ERROR_MESSAGE = "  - COULD NOT READ COMPILE NUMBER FROM './licznik.txt' \n  - NOT A NUMERIC VALUE\n  - PLEASE SET THIS VALUE MANUALLY IN 'licznik.txt' OR DELETE 'licznik.txt'";
                     MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
                 }
 
@@ -94,7 +94,9 @@ void readConfig(void) {
                         
                 }
                 catch (std::invalid_argument a) {
-                    MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT READ CURRENT BIT FROM './licznik.txt' \n  - NOT A NUMERIC VALUE 0 OR 1";
+
+                    // TO MO¯NA JESZCZE ODCZYTAÆ JEŒLI PRZY TAKIM B£ÊDZIE CHCEMY ZRESETOWAÆ LICZBÊ KOMPILACJI
+                    MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT READ CURRENT BIT FROM './licznik.txt' \n  - NOT A NUMERIC VALUE 0 OR 1\n  - PLEASE SET THIS VALUE MANUALLY IN 'licznik.txt OR DELETE 'licznik.txt'\n  - TO SET IT MANUALLY COPY THE VALUE OF VAR dataBlink IN 'CustomCANTx.h'";
                     MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
                 }
             }
