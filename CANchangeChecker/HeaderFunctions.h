@@ -6,6 +6,8 @@
 #include <string>
 
 
+
+
 // create string that represents method for sending blinking bit
 // automatically inverts previous state of BLINK_BIT_CURRENT
 std::string constructCANMethod(unsigned int *BLINK_BIT_CURRENT) {
@@ -34,7 +36,7 @@ void updateHeaderFile() {
 
 
     // if any previous function didn't executed properly this function is skipped
-    if (ERROR_STATUS)
+    if (MODIFICATION_ERROR_STATUS)
         return;
 
 
@@ -66,8 +68,8 @@ void updateHeaderFile() {
                     throw std::runtime_error("Could not find function");
             }
             catch (std::runtime_error e) {
-                std::cout << "ERROR : COULD NOT MODIFY 'CustomCANTx.h'\n - COULD NOT FIND FUNCTION THAT STARTS WITH LETTER 'f'\n   (FIRST SPECIFIED FUNCTION BY USER MUST START WITH LETTER 'f')\n\n)";
-                ERROR_STATUS = true;
+                std::cout << "  - COULD NOT MODIFY 'CustomCANTx.h'\n - COULD NOT FIND FUNCTION THAT STARTS WITH LETTER 'f'\n   - (FIRST SPECIFIED FUNCTION BY USER MUST START WITH LETTER 'f')";
+                MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
             }
 
             try {
@@ -82,8 +84,8 @@ void updateHeaderFile() {
                 }
             }
             catch (std::runtime_error e) {
-                std::cout << "ERROR : COULD NOT MODIFY FILE './inc/CustomCANTx.h' \n\n";
-                ERROR_STATUS = true;
+                MODIFICATION_ERROR_MESSAGE = "  - COULD NOT MODIFY FILE './inc/CustomCANTx.h'";
+                MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
             }
         }
         else {
@@ -92,8 +94,8 @@ void updateHeaderFile() {
     }
 
     catch (std::runtime_error e) {
-        std::cout << "ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n\n";
-        ERROR_STATUS = true;
+        MODIFICATION_ERROR_MESSAGE = "  - COULD NOT OPEN './inc/CustomCANTx.h'";
+        MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
     }
     
 }

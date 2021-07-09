@@ -9,13 +9,29 @@
 #define PATH_HEADER_FILE "./inc/CustomCANTx.h"
 #define PATH_CONFIG_FILE "./licznik.txt"
 
+#define MODIFICATION_ERROR true
+#define COMPILATION_ERROR true
 
-// variable that stores information about if on any point in program there was thrown some error
-bool ERROR_STATUS = false;
 
-std::string ERROR_MESSAGE;
+// variable indicating if modifications of 'licznik.txt' or 'CustomCANTx.h' were succesfull
+// please note that if error, other functions that modifies and compile are stopped from being executed
+// - TRUE if error
+// - FALSE if success
+bool MODIFICATION_ERROR_STATUS = false;
 
-bool COMPILATION_STATUS;
+// variable storing error message if MODIFICATION_ERROR_STATUS is true
+std::string MODIFICATION_ERROR_MESSAGE;
+
+// variable storing error message that is printed if COMPILATION_ERROR_STATUS is true
+// it is constant becouse actual compilation error from make.exe is printed on top of console and is impossible to store it into variable
+const std::string COMPILATION_ERROR_MESSAGE = "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER\n  - PLEASE FIX COMPILATION ERRORS AND DO NOT CHANGE 'licznik.txt'\n";
+
+
+// variable indicating if compilation was successfull or not
+// please note that if error, function updateConfig() is still executed
+// - TRUE if error
+// - FALSE if success
+bool COMPILATION_ERROR_STATUS = false;
 
 
 // struct for storing read data from 'licznik.txt' file

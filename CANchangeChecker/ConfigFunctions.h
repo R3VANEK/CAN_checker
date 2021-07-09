@@ -5,8 +5,6 @@
 #include <string>
 
 
-// TODO : metoda tworz¹ca podstawowy licznik.txt
-
 
 // Creates new 'licznik.txt' file
 void createConfig(void) {
@@ -40,9 +38,8 @@ void createConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        
-        ERROR_MESSAGE = "  -ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n";
-        ERROR_STATUS = true;
+        MODIFICATION_ERROR_MESSAGE = "  - COULD NOT OPEN './inc/CustomCANTx.h'";
+        MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
     }
 }
 
@@ -68,8 +65,8 @@ void readConfig(void) {
                         config_data_container.NUMBER_COMPILE = std::stoi(line.substr(19, std::string::npos));
                 }
                 catch (std::invalid_argument a) {
-                    std::cout << "ERROR : COULD NOT READ COMPILE NUMBER FROM './licznik.txt' \n - NOT A NUMERIC VALUE\n\n";
-                    ERROR_STATUS = true;
+                    MODIFICATION_ERROR_MESSAGE = "  - COULD NOT READ COMPILE NUMBER FROM './licznik.txt' \n  - NOT A NUMERIC VALUE";
+                    MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
                 }
 
                 try {
@@ -86,8 +83,8 @@ void readConfig(void) {
                         
                 }
                 catch (std::invalid_argument a) {
-                    std::cout << "ERROR : COULD NOT READ CURRENT BIT FROM './licznik.txt' \n - NOT A NUMERIC VALUE 0 OR 1\n\n";
-                    ERROR_STATUS = true;
+                    MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT READ CURRENT BIT FROM './licznik.txt' \n  - NOT A NUMERIC VALUE 0 OR 1";
+                    MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
                 }
             }
         }
@@ -96,7 +93,8 @@ void readConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        std::cout << "COULD NOT OPEN FILE './licznik.txt' \nATTEMPTING ON CREATING NEW ONE...\n\n";
+        // not a critical error so MODIFICATION_ERROR_STATUS is not changed
+        MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT OPEN FILE './licznik.txt' \nATTEMPTING ON CREATING NEW ONE...";
         createConfig();
     }
 }
@@ -107,8 +105,8 @@ void readConfig(void) {
 void updateConfig(void) {
 
 
-    // if any previous function didn't executed properly this function is skipped
-    if (ERROR_STATUS)
+    // if any previous function that modifies files didn't executed properly this function is skipped
+    if (MODIFICATION_ERROR_STATUS)
         return;
 
     std::ofstream configFile(PATH_CONFIG_FILE);
@@ -132,8 +130,8 @@ void updateConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        std::cout << "ERROR : COULD NOT MODIFY FILE 'licznik.txt'\n - DESPITE THAT './inc/CustomCANTx.h' WAS MODIFIED AND COMPILED WITH SUCCESS\n\n";
-        ERROR_STATUS = true;
+        MODIFICATION_ERROR_MESSAGE = "  - COULD NOT MODIFY FILE 'licznik.txt'\n  - DESPITE THAT './inc/CustomCANTx.h' WAS MODIFIED AND COMPILED WITH SUCCESS\n  - PLEASE UPDATE 'licznik.txt' MANUALLY";
+        MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
     }
     
 }

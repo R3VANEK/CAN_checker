@@ -16,7 +16,7 @@
 // this code is generated automatically by script, DO NOT CHANGE IT    
 void sendBlinkBit(tByte bSend){                                        
    if(bSend != 0){                                                     
-       tByte dataBlink = 0;
+       tByte dataBlink = 1;
        tByte data0 = 0;                                                
                                                                        
        mTX.dwIdentifier = 0x400;                                       
