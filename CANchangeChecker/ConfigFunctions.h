@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <windows.h>
 
 
 
@@ -10,9 +11,16 @@
 void createConfig(void) {
 
     std::ifstream headerFile(PATH_HEADER_FILE);
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     std::string line;
     bool find_BLINK_BIT = false;
+
+    SetConsoleTextAttribute(hConsole, 14);
+    std::cout << "FILE 'licznik.txt' NOT FOUND, ATTEMPTING ON CREATING NEW ONE...";
+    SetConsoleTextAttribute(hConsole, 7);
+    std::cout << "\n";
 
     try {
         if (headerFile.is_open()) {
@@ -30,7 +38,10 @@ void createConfig(void) {
             }
 
             config_data_container.NUMBER_COMPILE = 0;
-            std::cout << "NEW 'licznik.txt' CREATED WITH SUCCESS\n\n";
+            SetConsoleTextAttribute(hConsole, 160);
+            std::cout << "NEW 'licznik.txt' CREATED WITH SUCCESS";
+            SetConsoleTextAttribute(hConsole, 7);
+            std::cout << "\n\n";
 
         }
         else {
@@ -38,7 +49,7 @@ void createConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        MODIFICATION_ERROR_MESSAGE = "  - COULD NOT OPEN './inc/CustomCANTx.h'";
+        MODIFICATION_ERROR_MESSAGE = "  - COULD NOT OPEN './inc/CustomCANTx.h'\n  - COULD NOT CREATE NEW 'licznik.txt'\n";
         MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
     }
 }
@@ -94,7 +105,6 @@ void readConfig(void) {
     }
     catch (std::runtime_error e) {
         // not a critical error so MODIFICATION_ERROR_STATUS is not changed
-        MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT OPEN FILE './licznik.txt' \nATTEMPTING ON CREATING NEW ONE...";
         createConfig();
     }
 }
@@ -115,7 +125,7 @@ void updateConfig(void) {
     try {
         if (configFile.is_open()) {
 
-            std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT == 0) ? "Kolor diody prawid這wo wgranego programu : CZERWONY\n" : "Kolor diody prawid這wego wgranego programu : ZIELONY\n";
+            std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT == 0) ? "Kolor diody prawid這wo wgranego programu : CZERWONY\n" : "Kolor diody prawid這wo wgranego programu : ZIELONY\n";
 
             //BLINK_BIT_CURRENT state is updated in constructCANMethod
             configFile << "Obecny stan bitu : " << config_data_container.BLINK_BIT_CURRENT << "\n";

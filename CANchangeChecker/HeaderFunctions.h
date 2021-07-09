@@ -87,6 +87,7 @@ void updateHeaderFile() {
                 MODIFICATION_ERROR_MESSAGE = "  - COULD NOT MODIFY FILE './inc/CustomCANTx.h'";
                 MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
             }
+            
         }
         else {
             throw std::runtime_error("Could not open file");

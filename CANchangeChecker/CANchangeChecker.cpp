@@ -15,8 +15,11 @@ using namespace std;
 void exec(const char* cmd) {
 
     // if any previous function didn't executed properly this function is skipped
-    if (MODIFICATION_ERROR_STATUS)
+    if (MODIFICATION_ERROR_STATUS) {
+        COMPILATION_ERROR_STATUS = COMPILATION_ERROR;
         return;
+    }
+        
 
     char buffer[128];
     std::string result = "";
@@ -32,8 +35,12 @@ void exec(const char* cmd) {
         throw;
     }
     _pclose(pipe);
+    //cout << "result of make.exe : "<< result << "LENGTH : " << result.length();
 
-    COMPILATION_ERROR_STATUS = (result.length() > 300) ? 0 : COMPILATION_ERROR;
+    // brak klucza kompilacji - length() ok. 1540
+    // zamieniona błędnie kolejność nagłówków - length() ok. 1540
+    // jeżeli wiadomość dłuższa niż 1600 znaków - kompiacja bez błędów (?) TODO : sprawdzic dokładniej
+    COMPILATION_ERROR_STATUS = (result.length() > 1600) ? 0 : COMPILATION_ERROR;
 }
 
 
@@ -46,18 +53,20 @@ void printStatusMessage(void) {
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    cout << "\n\n- PROGRAM MODIFIED WITH ";
+    cout << "\n\n- FILES MODIFIED WITH ";
 
     if (!MODIFICATION_ERROR_STATUS) {
         SetConsoleTextAttribute(hConsole, 160);
-        cout << "SUCCESS\n";
+        cout << "SUCCESS";
         SetConsoleTextAttribute(hConsole, 7);
+        cout << "\n";
     }
     else {
         SetConsoleTextAttribute(hConsole, 12);
         cout << "ERRORS\n";
         SetConsoleTextAttribute(hConsole, 7);
         cout << MODIFICATION_ERROR_MESSAGE;
+        cout << "\n";
     }
 
     cout << "\n- PROGRAM COMPILED WITH ";
@@ -71,9 +80,26 @@ void printStatusMessage(void) {
         cout << "ERRORS\n";
         SetConsoleTextAttribute(hConsole, 7);
         cout << COMPILATION_ERROR_MESSAGE;
+        cout << "\n\n";
     }
 
-    cout << "\n\n";
+
+    if (!MODIFICATION_ERROR_STATUS && !COMPILATION_ERROR_STATUS) {
+
+        cout << "\n\nSUCCESSFULL UPLOAD DIODE COLOR IS ";
+        if (config_data_container.BLINK_BIT_CURRENT) {
+            SetConsoleTextAttribute(hConsole, 160);
+            cout << "GREEN";
+            SetConsoleTextAttribute(hConsole, 7);
+        }
+        else {
+            SetConsoleTextAttribute(hConsole, 12);
+            cout << "RED";
+            SetConsoleTextAttribute(hConsole, 7);
+        }
+        cout << "\nTHIS INFORMATION IS ALSO STORED IN './licznik.txt'\n\n";
+    }
+    
     system("pause");
 }
 

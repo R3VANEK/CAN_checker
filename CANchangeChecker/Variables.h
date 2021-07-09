@@ -24,7 +24,7 @@ std::string MODIFICATION_ERROR_MESSAGE;
 
 // variable storing error message that is printed if COMPILATION_ERROR_STATUS is true
 // it is constant becouse actual compilation error from make.exe is printed on top of console and is impossible to store it into variable
-const std::string COMPILATION_ERROR_MESSAGE = "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER\n  - PLEASE FIX COMPILATION ERRORS AND DO NOT CHANGE 'licznik.txt'\n";
+const std::string COMPILATION_ERROR_MESSAGE = "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER (IF MODIFICATION IS SUCCESS)\n  - PLEASE FIX COMPILATION AND/OR MODIFICATION ERRORS\n  - DO NOT CHANGE 'licznik.txt'\n";
 
 
 // variable indicating if compilation was successfull or not
