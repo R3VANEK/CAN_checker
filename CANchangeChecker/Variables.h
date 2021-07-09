@@ -13,6 +13,10 @@
 // variable that stores information about if on any point in program there was thrown some error
 bool ERROR_STATUS = false;
 
+std::string ERROR_MESSAGE;
+
+bool COMPILATION_STATUS;
+
 
 // struct for storing read data from 'licznik.txt' file
 struct configurationData {

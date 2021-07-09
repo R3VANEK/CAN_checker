@@ -40,7 +40,8 @@ void createConfig(void) {
         }
     }
     catch (std::runtime_error e) {
-        std::cout << "ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n\n";
+        
+        ERROR_MESSAGE = "  -ERROR : COULD NOT OPEN './inc/CustomCANTx.h'\n";
         ERROR_STATUS = true;
     }
 }

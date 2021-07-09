@@ -1,5 +1,5 @@
-Obecny stan bitu : 1
-Liczba kompilacji : 9
+Obecny stan bitu : 0
+Liczba kompilacji : 26
 
 
-Kolor diody prawid³owego wgranego programu : ZIELONY
+Kolor diody prawid³owo wgranego programu : CZERWONY

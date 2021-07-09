@@ -1,3 +1,4 @@
+																				 
 //****************************************************************************//
 //                                                                            //
 //   Header file for including of Timers                                      //
@@ -10,7 +11,21 @@
 #ifndef __CUSTOMCANTX_H__														 
 #define __CUSTOMCANTX_H__                                                       
                                                                                 
- 
+																		
+// special function checking whether software was updated correctly    
+// this code is generated automatically by script, DO NOT CHANGE IT    
+void sendBlinkBit(tByte bSend){                                        
+   if(bSend != 0){                                                     
+       tByte dataBlink = 0;
+       tByte data0 = 0;                                                
+                                                                       
+       mTX.dwIdentifier = 0x400;                                       
+       mTX.bLength = 1;                                                
+       mTX.bIs29Bit = 0;                                               
+       mTX.abData[0] = dataBlink;                                      
+       APIFTM_bSendCANMessage(&mTX);                                   
+   }                                                                   
+} 
 void fCAN_STATES2(tByte bSend) {
 	if (bSend != 0) {
 		tByte Data0 = 0;
