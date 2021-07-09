@@ -60,10 +60,10 @@ std::string BEGINNING_HEADER =			"																				 \n"
 
 
 // string representation of beginning part of sendBlinkBit() function 
-// together with output of constructCANMethod() and CAN_METHOD_END they represent full function
+// together with output of constructCANMethod() and CAN_METHOD_END they represent full function definition
 std::string CAN_METHOD_BEGINNING =		"																		\n"
-										"// special function checking whether software was updated correctly    \n"
-										"// this code is generated automatically by script, DO NOT CHANGE IT    \n"
+										"// special function checking whether software was uploaded correctly   \n"
+										"// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n"
 										"void sendBlinkBit(tByte bSend){                                        \n"
 										"   if(bSend != 0){                                                     \n";
 									
@@ -79,9 +79,13 @@ std::string CAN_METHOD_END =			"       tByte data0 = 0;                         
 										"       mTX.abData[0] = dataBlink;                                      \n"
 										"       APIFTM_bSendCANMessage(&mTX);                                   \n"
 										"   }                                                                   \n"
-										"} \n";
+										"}																		\n";
 
 
-
+//string representation of executing sendBlinkBit with timer in code
+std::string CAN_METHOD_TIMER =			"																		\n"
+										"		// execution of special function sendBlinkBit					\n"
+										"		// THIS CODE IS GENERATED AUTOMATICALLY							\n"
+										"		sendBlinkBit((tByte)(GET_TIMER_CAN == 12));						";
 
 #endif

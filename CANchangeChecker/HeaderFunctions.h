@@ -52,13 +52,36 @@ void updateHeaderFile() {
 
             while (getline(programFile, line)) {
 
-                // identify the first function in header file that isnt CANMethod
-                // that first functon must start with letter 'f'
-                if (line.substr(0, 6) == "void f")
+                // identify the first user-written function in header file 
+                if (line.substr(0, 4) == "void" && line.rfind("void sendBlinkBit(tByte bSend)") == std::string::npos)
                     startCopying = true;
 
-                if (startCopying)
-                    ProgramMashedContent += line + "\n";
+                if (startCopying) {
+
+                    //////////////////////////////////////////// BUG RISK ////////////////////////////////////////////////
+                    //                                                                                                  //
+                    // Im assuming that opening curly bracket of function vCAN_Tx_Custom                                //
+                    // is in the same line as string 'void vCAN_TX_Custom(void)'                                        //
+                    //                                                                                                  //
+                    // If it's not, program won't compile properly                                                      //
+                    //                                                                                                  //
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    if (
+                            line.rfind("void vCAN_TX_Custom(void)") == std::string::npos 
+                            && line.rfind("// execution of special function sendBlinkBit") == std::string::npos
+                            && line.rfind("// THIS CODE IS GENERATED AUTOMATICALLY") == std::string::npos
+                            && line.rfind("sendBlinkBit((tByte)(GET_TIMER_CAN == 12));") == std::string::npos
+                        ) {
+                        ProgramMashedContent += line + "\n";
+                    }
+                        
+                    else if(line.rfind("void vCAN_TX_Custom(void)") != std::string::npos){
+                        ProgramMashedContent += "void vCAN_TX_Custom(void){\n";
+                        ProgramMashedContent += CAN_METHOD_TIMER;
+                    }
+                }
+                    
 
             }
             programFile.close();
