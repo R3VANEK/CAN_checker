@@ -47,7 +47,7 @@ void sendBlinkBit(tByte bSend){
 
 ```
 
-Upon running, application inserts into ./inc/CustomCANTx.h special function sendBlinkingBit that alternates beetwen sending 0 bit and 1 bit.
+Upon running, application inserts into ./inc/CustomCANTx.h special function ```sendBlinkingBit``` that alternates beetwen sending 0 bit and 1 bit.
 It then invokes COSMOS compiler and outputs compiled code into ./out folder
 
 
