@@ -99,7 +99,7 @@ Program is tested for these errors :
 * This program was written special for specific projects architecture in B.A.U.S AT sp.z.o.o company, therefore it is not compatible/intended for use in any other project
 * Becouse of use standard library Windows.h for coloring text in console, application is only runnable on Windows system
 * Testing uploads as a whole require some preconfigured CAN I/O Module that register incoming bits via CANId 400 and blink diode accordingly. If you don't have this, you can
-simply use some software that detects CAN signals like (CANexplorer 4)[https://www.sontheim-industrie-elektronik.de/en/automation/visualization-and-monitoring/canexplorer-4/]
+simply use some software that detects CAN signals like [CANexplorer 4](https://www.sontheim-industrie-elektronik.de/en/automation/visualization-and-monitoring/canexplorer-4/)
 
 
 
