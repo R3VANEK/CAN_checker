@@ -25,7 +25,7 @@ didn't update software on module. So with that in mind, how to tell if you reall
 
 
 
-Run CAN_Checker on your Visual Studio project and after completion upload software to the miunsketoolchain app normally. How to determine if we uploaded correctly? Just (plug)[#Comments-and-adnotations] to the Main CAN Module small CAN I/O Module with diode that blinks red if it recives 0 via CANId 400 and blinks green if it detects 1 also via CANId. Becouse of alternating beetwen sending bit 1 and 0, if you happen to see no change in color of diode you have certainty something went wrong in the uploading procedure
+Run CAN_Checker on your Visual Studio project and after completion upload software to the miunsketoolchain app normally. How to determine if we uploaded correctly? Just [plug](#Comments-and-adnotations) to the Main CAN Module small CAN I/O Module with diode that blinks red if it recives 0 via CANId 400 and blinks green if it detects 1 also via CANId. Becouse of alternating beetwen sending bit 1 and 0, if you happen to see no change in color of diode you have certainty something went wrong in the uploading procedure
 
 
 ## How it works
@@ -47,17 +47,6 @@ void sendBlinkBit(tByte bSend){
 
 ```
 
-
-```C
-
-void vCAN_TX_Custom(void){
-
-  sendBlinkBit((tByte)(GET_TIMER_CAN == 12));	
-  // other user code goes here unmodified by program
-}
-
-```
-
 Upon running, application inserts into ./inc/CustomCANTx.h special function sendBlinkingBit that alternates beetwen sending 0 bit and 1 bit.
 It then invokes COSMOS compiler and outputs compiled code into ./out folder
 
@@ -66,8 +55,8 @@ It then invokes COSMOS compiler and outputs compiled code into ./out folder
 
 * COSMOS compiler with compilation key in the project directory (make.exe)
 * CustomCANTx.h file in the ./inc folder
-* (Configured CAN I/O diode module)[#Comments-andadnotations]
-* (Windows 7/8/10)[#Comments-and-adnotations]
+* [Configured CAN I/O diode module](#Comments-andadnotations)
+* [Windows 7/8/10](#Comments-and-adnotations)
 
 
 
