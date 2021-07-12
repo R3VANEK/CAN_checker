@@ -5,6 +5,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/fixed-bugs.svg)](https://forthebadge.com)
 
 ## Table of Contents
+* [Description](#Description)
 * [How it works](#How-it-works)
 * [Software required](#Software-required)
 * [Licznik.txt](#Licznik.txt)
@@ -15,7 +16,7 @@
 
 
 
-## How it works
+## Description
 
 Updating software in Miunske CAN Modules can sometimes be a little tricky. You wrote a good, working code, open miunsketoolchain app to upload it, progress bar goes up to 100% 
 and says "done". You are happy and ready to test it out, but appearently it just don't work as you would except. It may be the case that despite no warnings, in reality you 
@@ -35,3 +36,39 @@ The next step is to simply upload software to the miunsketoolchain app normally.
 that blinks red if it recives 0 via CANId 400 and blinks green if it detects 1 also via CANId.
 
 Becouse of alternating beetwen sending bit 1 and 0, if you happen to see no change in color of diode you have certainty something went wrong in the uploading procedure
+
+
+## How it works
+
+When run, CAN_checker checks 2 things. It searches for licznik.txt and CustomCANTx.h If everything is ok, it inserts sendBlinkingBit() function definiton and declaration to the user's code
+
+```C
+void sendBlinkBit(tByte bSend){                                        
+   if(bSend != 0){                                                     
+       tByte dataBlink = 0;
+       tByte data0 = 0;                                                
+                                                                       
+       mTX.dwIdentifier = 0x400;                                       
+       mTX.bLength = 1;                                                
+       mTX.bIs29Bit = 0;                                               
+       mTX.abData[0] = dataBlink;                                      
+       APIFTM_bSendCANMessage(&mTX);                                   
+   }                                                                   
+}
+
+
+```
+
+
+```C
+
+void vCAN_TX_Custom(void){
+
+  sendBlinkBit((tByte)(GET_TIMER_CAN == 12));	
+  // other user code goes here unmodified by program
+}
+
+```
+
+After modifying CustomCANtx.h, program the runs COSMOS compilator on the whole Visual Studio project and if successful outputs compiled files in ./out folder
+
