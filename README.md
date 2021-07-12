@@ -72,3 +72,60 @@ void vCAN_TX_Custom(void){
 
 After modifying CustomCANtx.h, program the runs COSMOS compilator on the whole Visual Studio project and if successful outputs compiled files in ./out folder
 
+
+## Software required
+
+* COSMOS compiler with compilation key in the project directory (make.exe)
+* CustomCANTx.h file in the ./inc folder
+* (Windows 7/8/10)[#Comments-and-adnotations]
+
+
+
+
+
+## Licznik.txt
+
+// image here
+
+This file serves as config/information file. It holds : 
+* Information about current set bit (0 or 1) in the sendBlinkingBit function
+* Number of compilations of current project
+* Proper upload diode color
+
+
+## Error handling
+
+Program is tested for these errors :
+
+* Non-existing licznik.txt : warning is prompted and new licznik.txt is created
+* Corrupted data in licznik.txt : fatal error is raised, program outputs error and stop compilation
+* Non-existing CustomCANTx.h : fatal error is raised, program ouputs error and stop compilation
+* Corrupted CustomCANTx.h (lack of user defined functions) : fatal error is raised, program outputs error and stop compilation
+
+* Could not update licznik.txt : warning is prompted, compilation was success, please modify licznik.txt manually
+* Could not read licznik.txt or CustomCANTx.h : fatal error is raised, program outputs error and stop compilation
+
+**In addition, if any compilation error occurs its code is prompted on top of console**
+
+
+// maybe insert some images of tese errors?
+
+
+## Comments and adnotations
+
+* This program was written special for specific projects architecture in B.A.U.S AT sp.z.o.o company, therefore it is not compatible/intended for use in any other project
+* Becouse of use standard library Windows.h for coloring text in console, application is only runnable on Windows system
+
+
+
+## Licence
+
+All rights reserved
+
+
+
+## Authors
+Jan Napieralski  [R3VANEK](https://github.com/R3VANEK)
+
+
+
