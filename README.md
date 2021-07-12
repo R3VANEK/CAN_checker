@@ -55,7 +55,7 @@ It then invokes COSMOS compiler and outputs compiled code into ./out folder
 
 * COSMOS compiler with compilation key in the project directory (make.exe)
 * CustomCANTx.h file in the ./inc folder
-* [Configured CAN I/O diode module](#Comments-andadnotations)
+* [Configured CAN I/O diode module](#Comments-and-adnotations)
 * [Windows 7/8/10](#Comments-and-adnotations)
 
 
