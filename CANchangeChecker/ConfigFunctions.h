@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <windows.h>
+#include <bitset>
 
 
 
@@ -27,12 +28,12 @@ void createConfig(void) {
 
             // When there is no 'licznik.txt' file we must check if CANMethod is already inserted in code
             // if yes : BLINK_BIT_CURRENT value becomes value read
-            // if no : BLINK_BIT_CURRENT value becomes 0
+            // if no : BLINK_BIT_CURRENT value becomes 1
             while (std::getline(headerFile, line)) {
 
                 if (line.rfind("dataBlink") != std::string::npos) {
                     int comaIndex = line.rfind(';');
-                    config_data_container.BLINK_BIT_CURRENT = std::stoi( line.substr(comaIndex-2, comaIndex-1) );
+                    config_data_container.BLINK_BIT_CURRENT_DECIMAL = std::stoi( line.substr(comaIndex-2, comaIndex-1) );
                     break;
                 }
             }
@@ -69,9 +70,13 @@ void readConfig(void) {
     try {
         if (configFile.is_open()) {
 
+
+            // odczytywanie wartoœci z licznik.txt (bez reprezentacji binarnej bo w przetwarzaniu jest wykorzystywana tylko decymalna)
+            // wartosæ binarna jest dopisywana dopiero przy modyfikacji licnzik.txt przez przekonwertowanie decymalnej
             while (getline(configFile, line)) {
 
                 try {
+                    // COMPILE NUMBER
                     if (line.rfind('L', 0) == 0)
                         config_data_container.NUMBER_COMPILE = std::stoi(line.substr(19, std::string::npos));
                 }
@@ -81,22 +86,15 @@ void readConfig(void) {
                 }
 
                 try {
-                    if (line.rfind('O', 0) == 0) {
-
-                        //additional check whether number is valid
-                        //becouse default behavior of std::stoi and bit field BLINK_BIT_CURRENT is silencing this error
-                        std::string check = line.substr(19, std::string::npos);
-                        if (check != "1" && check != "0")
-                            throw std::invalid_argument("Invalid number");
-
-                        config_data_container.BLINK_BIT_CURRENT = std::stoi(check);
+                    // DECIMAL SENDING VALUE
+                    if (line.rfind('D', 0) == 0) {
+                        int check = std::stoi(line.substr(36, std::string::npos));
+                        config_data_container.BLINK_BIT_CURRENT_DECIMAL = check;
                     }
                         
                 }
                 catch (std::invalid_argument a) {
-
-                    // TO MO¯NA JESZCZE ODCZYTAÆ JEŒLI PRZY TAKIM B£ÊDZIE CHCEMY ZRESETOWAÆ LICZBÊ KOMPILACJI
-                    MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT READ CURRENT BIT FROM './licznik.txt' \n  - NOT A NUMERIC VALUE 0 OR 1\n  - PLEASE SET THIS VALUE MANUALLY IN 'licznik.txt OR DELETE 'licznik.txt'\n  - TO SET IT MANUALLY COPY THE VALUE OF VAR dataBlink IN 'CustomCANTx.h'";
+                    MODIFICATION_ERROR_MESSAGE =  "  - COULD NOT READ CURRENT DECIMAL SENDING NUMBER FROM './licznik.txt' \n  - NOT A NUMERIC VALUE\n  - PLEASE SET THIS VALUE MANUALLY IN 'licznik.txt OR DELETE 'licznik.txt'\n  - TO SET IT MANUALLY COPY AND PARSE TO DECIMAL SENDING VALUES IN dataBlink IN 'CustomCANTx.h'";
                     MODIFICATION_ERROR_STATUS = MODIFICATION_ERROR;
                 }
             }
@@ -113,7 +111,10 @@ void readConfig(void) {
 
 
 
-// Updates 'licznik.txt' file about new BLINK_BIT_CURRENT state, compilation number and diode color
+// Updates 'licznik.txt' file about : 
+// - new BLINK_BIT_CURRENT_DECIMAL
+// - binary representation of BLINK_BIT_CURRENT_DECIMAL
+// - compilation number and diode color
 void updateConfig(void) {
 
 
@@ -127,10 +128,14 @@ void updateConfig(void) {
     try {
         if (configFile.is_open()) {
 
-            std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT == 0) ? "Kolor diody prawid³owo wgranego programu : CZERWONY\n" : "Kolor diody prawid³owo wgranego programu : ZIELONY\n";
+            // TODO : JAK TO INTERPRETOWAÆ?
+            //std::string diodeColor = (config_data_container.BLINK_BIT_CURRENT_DECIMAL == 0) ? "Kolor diody prawid³owo wgranego programu : CZERWONY\n" : "Kolor diody prawid³owo wgranego programu : ZIELONY\n";
+
+            std::string diodeColor = "JAK TO INTERPRETOWAÆ MAREK?";
 
             //BLINK_BIT_CURRENT state is updated in constructCANMethod
-            configFile << "Obecny stan bitu : " << config_data_container.BLINK_BIT_CURRENT << "\n";
+            configFile << "Decymalna obecna wartoœæ wysy³ana : " << config_data_container.BLINK_BIT_CURRENT_DECIMAL << "\n";
+            configFile << "Binarna obecna wartoœæ wysy³ana : " << std::bitset<8>(config_data_container.BLINK_BIT_CURRENT_DECIMAL).to_string() << "\n";
             configFile << "Liczba kompilacji : " << config_data_container.NUMBER_COMPILE + 1;
             configFile << "\n";
             configFile << "\n";

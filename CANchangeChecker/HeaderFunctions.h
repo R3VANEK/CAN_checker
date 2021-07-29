@@ -4,22 +4,24 @@
 
 #include <fstream>
 #include <string>
+#include <cstdlib>
 
 
 
 
 // create string that represents method for sending blinking bit
-// automatically inverts previous state of BLINK_BIT_CURRENT
-std::string constructCANMethod(unsigned int *BLINK_BIT_CURRENT) {
+// updates BLINK_BIT_CURRENT_DECIMAL
+std::string constructCANMethod() {
 
-    *BLINK_BIT_CURRENT = !*BLINK_BIT_CURRENT;
 
+    config_data_container.BLINK_BIT_CURRENT_DECIMAL = (config_data_container.BLINK_BIT_CURRENT_DECIMAL != 255) ? config_data_container.BLINK_BIT_CURRENT_DECIMAL + 1 : 1;
     std::string output;
-    
+    char b[32];
+    _itoa_s(config_data_container.BLINK_BIT_CURRENT_DECIMAL, b, 16);
+
+
     output += CAN_METHOD_BEGINNING;
-    output += "       tByte dataBlink = ";
-    output += std::to_string(*BLINK_BIT_CURRENT);
-    output += ";\n";
+    output += "     mTX.abData[0] = 0x" + std::string(b) + ";\n";
     output += CAN_METHOD_END;
 
     return output;
@@ -44,7 +46,7 @@ void updateHeaderFile() {
     std::fstream programFile(PATH_HEADER_FILE);
     bool startCopying = false;
 
-    std::string ProgramMashedContent = BEGINNING_HEADER + constructCANMethod(&config_data_container.BLINK_BIT_CURRENT);
+    std::string ProgramMashedContent = BEGINNING_HEADER + constructCANMethod();
     std::string line;
 
     try {

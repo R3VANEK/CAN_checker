@@ -16,13 +16,10 @@
 // THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               
 void sendBlinkBit(tByte bSend){                                        
    if(bSend != 0){                                                     
-       tByte dataBlink = 1;
-       tByte data0 = 0;                                                
-                                                                       
        mTX.dwIdentifier = 0x400;                                       
        mTX.bLength = 1;                                                
        mTX.bIs29Bit = 0;                                               
-       mTX.abData[0] = dataBlink;                                      
+     mTX.abData[0] = 0x3;
        APIFTM_bSendCANMessage(&mTX);                                   
    }                                                                   
 }																		
@@ -712,11 +709,11 @@ void fCAN_BATTERY2(tByte bSend) {
 }
 
 void vCAN_TX_Custom(void){
-
 																		
 		// execution of special function sendBlinkBit					
 		// THIS CODE IS GENERATED AUTOMATICALLY							
-		sendBlinkBit((tByte)(GET_TIMER_CAN == 12));						
+		sendBlinkBit((tByte)(GET_TIMER_CAN == 12));																								
+																		
 
 																					
 
@@ -729,6 +726,35 @@ void vCAN_TX_Custom(void){
 
 
 	//fCAN_STATES2((tByte)(GET_TIMER_CAN == 6));
+
+	//fCAN_CLIMA1((tByte)(GET_TIMER_CAN == 8));
+	//fCAN_CLIMA2((tByte)(GET_TIMER_CAN == 10));
+
+	
+
+	fCAN_BATTERY1((tByte)(GET_TIMER_CAN == 12));
+	fCAN_BATTERY2((tByte)(GET_TIMER_CAN == 14));
+	fCAN_CENTRALLOCK((tByte)(GET_TIMER_CAN == 16));
+
+
+
+
+	if (GET_TIMER_CAN >= 18){
+		SET_TIMER_CAN(0);
+	}
+	else{
+		INCREMENT_TIMER_CAN;
+	}
+
+}
+
+
+
+
+
+
+#endif
+Byte)(GET_TIMER_CAN == 6));
 
 	//fCAN_CLIMA1((tByte)(GET_TIMER_CAN == 8));
 	//fCAN_CLIMA2((tByte)(GET_TIMER_CAN == 10));

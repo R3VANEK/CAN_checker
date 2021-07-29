@@ -48,9 +48,9 @@ void printStatusMessage(void) {
     if (!MODIFICATION_ERROR_STATUS && !COMPILATION_ERROR_STATUS) {
 
         std::cout << "\n\nSUCCESSFULL UPLOAD DIODE COLOR IS ";
-        if (config_data_container.BLINK_BIT_CURRENT) {
+        if (config_data_container.BLINK_BIT_CURRENT_DECIMAL) {
             SetConsoleTextAttribute(hConsole, 160);
-            std::cout << "GREEN";
+            std::cout << "WHAT COLOR MAREK";
             SetConsoleTextAttribute(hConsole, 7);
         }
         else {

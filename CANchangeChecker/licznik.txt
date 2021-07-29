@@ -1,5 +1,6 @@
-Obecny stan bitu : 1
-Liczba kompilacji : 1
+Decymalna obecna wartoœæ wysy³ana : 3
+Binarna obecna wartoœæ wysy³ana : 00000011
+Liczba kompilacji : 6
 
 
-Kolor diody prawid³owo wgranego programu : ZIELONY
+JAK TO INTERPRETOWAÆ MAREK?

@@ -38,7 +38,7 @@ bool COMPILATION_ERROR_STATUS = false;
 struct configurationData {
 
 	int NUMBER_COMPILE;
-	unsigned int BLINK_BIT_CURRENT;
+	int BLINK_BIT_CURRENT_DECIMAL;
 
 } config_data_container;
 
@@ -65,19 +65,14 @@ std::string CAN_METHOD_BEGINNING =		"																		\n"
 										"// special function checking whether software was uploaded correctly   \n"
 										"// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n"
 										"void sendBlinkBit(tByte bSend){                                        \n"
-										"   if(bSend != 0){                                                     \n";
-									
-
+										"   if(bSend != 0){                                                     \n"
+										"       mTX.dwIdentifier = 0x400;                                       \n"
+										"       mTX.bLength = 1;                                                \n"
+										"       mTX.bIs29Bit = 0;                                               \n";
 
 // string representation of end part of sendBlinkBit() function 
 // together with output of constructCANMethod() and CAN_METHOD_BEGINNING they represent full function
-std::string CAN_METHOD_END =			"       tByte data0 = 0;                                                \n"
-										"                                                                       \n"
-										"       mTX.dwIdentifier = 0x400;                                       \n"
-										"       mTX.bLength = 1;                                                \n"
-										"       mTX.bIs29Bit = 0;                                               \n"
-										"       mTX.abData[0] = dataBlink;                                      \n"
-										"       APIFTM_bSendCANMessage(&mTX);                                   \n"
+std::string CAN_METHOD_END =			"       APIFTM_bSendCANMessage(&mTX);                                   \n"
 										"   }                                                                   \n"
 										"}																		\n";
 
