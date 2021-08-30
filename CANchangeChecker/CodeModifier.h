@@ -14,15 +14,15 @@ class CodeModifier {
 
 		std::string createBlinkBytes() {
 			std::string output;
-			auto data_container = Config::setConfigData();
+			/*int* data_container = Config::setConfigData();
 			output += "////////////////////////////////////////////////////////\n";
 			output += "// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT\n";
 			output += "// random values sending through sendBlinkBit\n";
-			output += "#define CUSTOM_BLINK_BYTE1  (" + data_container.random_byte1;
+			output += "#define CUSTOM_BLINK_BYTE1  (" + data_container[0];
 			output += ")\n";
-			output += "#define CUSTOM_BLINK_BYTE2  (" + data_container.random_byte2;
+			output += "#define CUSTOM_BLINK_BYTE2  (" + data_container[1];
 			output += ")\n////////////////////////////////////////////////////////\n";
-			return output;
+			return output;*/
 		}
 
 
@@ -89,7 +89,6 @@ class CodeModifier {
 				headerFileWrite << createNewTextContent();
 				headerFileWrite.close();
 			}
-
 		}
 };
 

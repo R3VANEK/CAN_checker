@@ -1,6 +1,4 @@
 Decymalna obecna wartoœæ wysy³ana : 3
 Binarna obecna wartoœæ wysy³ana : 00000011
-Liczba kompilacji : 6
+Liczba kompilacji projektu : ABC
 
-
-JAK TO INTERPRETOWAÆ MAREK?

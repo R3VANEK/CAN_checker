@@ -3,14 +3,12 @@
 #include <stdexcept>
 #include <stdio.h>
 #include <windows.h>
+#include <fstream>
+
 
 #include "Variables.h"
-#include "ConfigFunctions.h"
-#include "HeaderFunctions.h"
-#include "OtherFunctions.h"
-
-using namespace std;
-
+#include "Config.h"
+#include "CodeModifier.h"
 
 
 // AKTUALIZACJA WARTOŚCI O ÓSEMKOWE
@@ -27,8 +25,24 @@ using namespace std;
 
 int main()
 {
+
    
-    readConfig();
+
+    Config config;
+    CodeModifier code;
+
+
+    config.readConfig();
+
+
+
+
+
+
+
+
+
+/*    readConfig();
 
     updateHeaderFile();
 
@@ -36,7 +50,7 @@ int main()
 
     updateConfig();
 
-    printStatusMessage();
+    printStatusMessage();*/
        
     return 0;
 }

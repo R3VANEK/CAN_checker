@@ -17,8 +17,8 @@ class Config {
 		std::ofstream configFileWrite;
 		bool is_BlinkingBit = false;
 
-		static struct ConfigData {
-			long compile_time;
+		struct {
+			long compile_time = 0;
 			unsigned int random_byte1;
 			unsigned int random_byte2;
 		} data_container;
@@ -37,20 +37,28 @@ class Config {
 			configFile.open(PATH_CONFIG_FILE);
 
 			if (!configFile.is_open()) {
+				// there is no point trying to create new file as function updateConfig do this anyway
 				printf("ERROR OPENING CONFIG FILE, CREATING NEW ONE...");
-				// tworzenie nowego licznik.txt a potem i tak losowanie nowych wartoœci itp.
+			}
+			else {
+				while (getline(configFile, line)) {
+
+					if (line.rfind("Liczba kompilacji projektu") != std::string::npos) {
+						try
+						{ 
+							data_container.compile_time = std::stoi(line.substr(29, std::string::npos)); 
+						}
+						catch (std::invalid_argument a) {
+							printf("ERROR READING COMPILE NUMBER, IT WILL BE 0");
+							// NOT A CRITICAL ERROR, MOVE ON;
+						}		
+						break;
+					}
+				}
 			}
 			
 
-			// odczyt wartoœci z licznik.txt
-			// odczyt tylko liczby kompilacji, wartoœci wysy³ane i tak bêd¹ losowane od pocz¹tku
-			while (getline(configFile, line)) {
-
-				if (line.rfind("Liczba kompilacji projektu") != std::string::npos) {
-					data_container.compile_time = std::stoi(line.substr(29, std::string::npos));
-					// ³apanie b³êdu z³ego formatu liczby kompilacji, nie liczba
-				}
-			}
+			
 			configFile.close();
 		}
 
@@ -75,11 +83,17 @@ class Config {
 
 
 
-		ConfigData static setConfigData() {
+		int* setConfigData() {
 			data_container.random_byte1 = rand() % 255 + 1;
 			data_container.random_byte2 = rand() % 255 + 1;
 			data_container.compile_time += 1;
-			return data_container;
+
+			// returning ConfigData struct is not possible in other .h files
+			int output[2];
+			output[0] = data_container.random_byte1;
+			output[1] = data_container.random_byte2;
+
+			return output;
 		}
 
 };
