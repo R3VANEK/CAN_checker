@@ -34,7 +34,7 @@ struct configurationData {
 
 
 
-#define BEGINNING_HEADER				"																				\n\
+#define BEGINNINGTEXT					"																				\n\
 										//****************************************************************************//\n\
 										//                                                                            //\n\
 										//   Header file for including of Timers                                      //\n\
@@ -58,11 +58,11 @@ struct configurationData {
 										       mTX.dwIdentifier = 0x400;                                       \n\
 										       mTX.bLength = 2;                                                \n\
 										       mTX.bIs29Bit = 0;                                               \n\
-											   mTX.abData[0] = CUSTOM_BLINK_BIT1;							   \n\
-											   mTX.abData[1] = CUSTOM_BLINK_BIT2;							   \n\
+											   mTX.abData[0] = CUSTOM_BLINK_BYTE1;							   \n\
+											   mTX.abData[1] = CUSTOM_BLINK_BYTE2;							   \n\
 											   APIFTM_bSendCANMessage(&mTX);								   \n\
 											}																   \n\
-										}																	   \n\";				
+										}																	   \n";				
 									
 
 

@@ -150,6 +150,7 @@
     <ClCompile Include="CANchangeChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CodeModifier.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConfigFunctions.h" />
     <ClInclude Include="HeaderFunctions.h" />
