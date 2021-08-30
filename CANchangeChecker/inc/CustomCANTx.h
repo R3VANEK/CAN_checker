@@ -11,7 +11,16 @@
 #ifndef __CUSTOMCANTX_H__														 
 #define __CUSTOMCANTX_H__                                                       
                                                                                 
-																		
+			
+////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT
+// random values sending through sendBlinkBit
+#define CUSTOM_BLINK1  (0x255)
+#define CUSTOM_BLINK1  (0x255)
+////////////////////////////////////////////////////////
+
+
+
 // special function checking whether software was uploaded correctly   
 // THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               
 void sendBlinkBit(tByte bSend){                                        
@@ -19,7 +28,7 @@ void sendBlinkBit(tByte bSend){
        mTX.dwIdentifier = 0x400;                                       
        mTX.bLength = 1;                                                
        mTX.bIs29Bit = 0;                                               
-     mTX.abData[0] = 0x3;
+		mTX.abData[0] = 0x3;
        APIFTM_bSendCANMessage(&mTX);                                   
    }                                                                   
 }																		

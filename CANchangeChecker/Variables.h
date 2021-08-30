@@ -5,7 +5,6 @@
 
 
 
-
 #define PATH_HEADER_FILE "./inc/CustomCANTx.h"
 #define PATH_CONFIG_FILE "./licznik.txt"
 
@@ -13,25 +12,14 @@
 #define COMPILATION_ERROR true
 
 
-// variable indicating if modifications of 'licznik.txt' or 'CustomCANTx.h' were succesfull
-// please note that if error, other functions that modifies and compile are stopped from being executed
-// - TRUE if error
-// - FALSE if success
 bool MODIFICATION_ERROR_STATUS = false;
-
-// variable storing error message if MODIFICATION_ERROR_STATUS is true
-std::string MODIFICATION_ERROR_MESSAGE;
-
-// variable storing error message that is printed if COMPILATION_ERROR_STATUS is true
-// it is constant becouse actual compilation error from make.exe is printed on top of console and is impossible to store it into variable
-const std::string COMPILATION_ERROR_MESSAGE = "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER (IF MODIFICATION IS SUCCESS)\n  - PLEASE FIX COMPILATION AND/OR MODIFICATION ERRORS\n  - DO NOT CHANGE 'licznik.txt'\n";
-
-
-// variable indicating if compilation was successfull or not
-// please note that if error, function updateConfig() is still executed
-// - TRUE if error
-// - FALSE if success
 bool COMPILATION_ERROR_STATUS = false;
+
+HANDLE Console_Handle;
+
+std::string MODIFICATION_ERROR_MESSAGE;
+#define COMPILATION_ERROR_MESSAGE "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER (IF MODIFICATION IS SUCCESS)\n  - PLEASE FIX COMPILATION AND/OR MODIFICATION ERRORS\n  - DO NOT CHANGE 'licznik.txt'\n";
+
 
 
 // struct for storing read data from 'licznik.txt' file
@@ -43,32 +31,66 @@ struct configurationData {
 } config_data_container;
 
 
-//string representation of beginning part of 'CustomCANTx.h'
-std::string BEGINNING_HEADER =			"																				 \n"
-										"//****************************************************************************//\n"
-										"//                                                                            //\n"
-										"//   Header file for including of Timers                                      //\n"
-										"//   Filename: CustomCANTx.h.h                                                //\n"
-										"//   Date: 03.03.2015                                                         //\n"
-										"//   Time: 11:04:24                                                           //\n"
-										"//                                                                            //\n"
-										"//****************************************************************************//\n"
-										"                                                                                \n"
-										"#ifndef __CUSTOMCANTX_H__														 \n"
-										"#define __CUSTOMCANTX_H__                                                       \n"
-										"                                                                                \n";
 
 
-// string representation of beginning part of sendBlinkBit() function 
-// together with output of constructCANMethod() and CAN_METHOD_END they represent full function definition
-std::string CAN_METHOD_BEGINNING =		"																		\n"
-										"// special function checking whether software was uploaded correctly   \n"
-										"// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n"
-										"void sendBlinkBit(tByte bSend){                                        \n"
-										"   if(bSend != 0){                                                     \n"
-										"       mTX.dwIdentifier = 0x400;                                       \n"
-										"       mTX.bLength = 1;                                                \n"
-										"       mTX.bIs29Bit = 0;                                               \n";
+
+#define BEGINNING_HEADER				"																				\n\
+										//****************************************************************************//\n\
+										//                                                                            //\n\
+										//   Header file for including of Timers                                      //\n\
+										//   Filename: CustomCANTx.h.h                                                //\n\
+										//   Date: 03.03.2015                                                         //\n\
+										//   Time: 11:04:24                                                           //\n\
+										//                                                                            //\n\
+										//****************************************************************************//\n\
+										                                                                                \n\
+										#ifndef __CUSTOMCANTX_H__														\n\
+										#define __CUSTOMCANTX_H__                                                       \n\
+										                                                                                \n";
+
+
+
+#define CUSTOMBLINK_METHOD				"																	   \n\
+										// special function checking whether software was uploaded correctly   \n\
+										// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n\
+										void sendBlinkBit(tByte bSend){                                        \n\
+										   if(bSend != 0){                                                     \n\
+										       mTX.dwIdentifier = 0x400;                                       \n\
+										       mTX.bLength = 2;                                                \n\
+										       mTX.bIs29Bit = 0;                                               \n\
+											   mTX.abData[0] = CUSTOM_BLINK_BIT1;							   \n\
+											   mTX.abData[1] = CUSTOM_BLINK_BIT2;							   \n\
+											   APIFTM_bSendCANMessage(&mTX);								   \n\
+											}																   \n\
+										}																	   \n\";				
+									
+
+
+#define CUSTOMBLINK_TIMER				"	// execution of special function sendBlinkBit					\n\
+											// THIS CODE IS GENERATED AUTOMATICALLY							\n\
+												sendBlinkBit((tByte)(GET_TIMER_CAN == 12));					";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define CAN_METHOD_BEGINNING 			"																		\n\
+										// special function checking whether software was uploaded correctly   \n\
+										// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n\
+										void sendBlinkBit(tByte bSend){                                        \n\
+										   if(bSend != 0){                                                     \n\
+										       mTX.dwIdentifier = 0x400;                                       \n\
+										       mTX.bLength = 1;                                                \n\
+										       mTX.bIs29Bit = 0;                                               \n";
 
 // string representation of end part of sendBlinkBit() function 
 // together with output of constructCANMethod() and CAN_METHOD_BEGINNING they represent full function
