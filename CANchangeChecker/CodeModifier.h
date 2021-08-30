@@ -11,18 +11,27 @@ class CodeModifier {
 		std::fstream headerFileWrite;
 
 
+		void setConfigData() {
+			srand((unsigned int)time(NULL));
+			CONFIG_DATA_CONTAINER.random_byte1 = rand() % 255 + 1;
+			CONFIG_DATA_CONTAINER.random_byte2 = rand() % 255 + 1;
+			CONFIG_DATA_CONTAINER.compile_time += 1;
+		}
+
 
 		std::string createBlinkBytes() {
+
+			setConfigData();
+
 			std::string output;
-			/*int* data_container = Config::setConfigData();
 			output += "////////////////////////////////////////////////////////\n";
 			output += "// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT\n";
 			output += "// random values sending through sendBlinkBit\n";
-			output += "#define CUSTOM_BLINK_BYTE1  (" + data_container[0];
+			output += "#define CUSTOM_BLINK_BYTE1  (" + std::to_string(CONFIG_DATA_CONTAINER.random_byte1);
 			output += ")\n";
-			output += "#define CUSTOM_BLINK_BYTE2  (" + data_container[1];
+			output += "#define CUSTOM_BLINK_BYTE2  (" + std::to_string(CONFIG_DATA_CONTAINER.random_byte2);
 			output += ")\n////////////////////////////////////////////////////////\n";
-			return output;*/
+			return output;
 		}
 
 
@@ -47,7 +56,7 @@ class CodeModifier {
 				while (getline(headerFile, line)) {
 
 					// identify the first user-written function in header file 
-					if (line.substr(0, 4) == "void" && line.rfind("void sendBlinkBit(tByte bSend)") == std::string::npos)
+					if (line.substr(0, 4) == "void" && line.rfind("void sendBlinkBit(tByte bSend)") == std::string::npos && !startCopying)
 						startCopying = true;
 
 					if (startCopying) {

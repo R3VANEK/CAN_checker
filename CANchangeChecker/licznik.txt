@@ -1,4 +1,3 @@
-Decymalna obecna wartoœæ wysy³ana : 3
-Binarna obecna wartoœæ wysy³ana : 00000011
-Liczba kompilacji projektu : ABC
-
+Liczba kompilacji projektu : 1
+Losowa liczba wysy³ana na bajcie 1 : 42
+Losowa liczba wysy³ana po bajcie 2 : 108

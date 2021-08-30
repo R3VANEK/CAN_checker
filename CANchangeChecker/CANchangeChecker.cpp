@@ -33,7 +33,7 @@ int main()
 
 
     config.readConfig();
-
+    code.updateHeaderFile();
 
 
 

@@ -1,4 +1,4 @@
-																				 
+														
 //****************************************************************************//
 //                                                                            //
 //   Header file for including of Timers                                      //
@@ -7,31 +7,29 @@
 //   Time: 11:04:24                                                           //
 //                                                                            //
 //****************************************************************************//
-                                                                                
-#ifndef __CUSTOMCANTX_H__														 
+										                                        
+#ifndef __CUSTOMCANTX_H__														
 #define __CUSTOMCANTX_H__                                                       
-                                                                                
-			
+										                                        
 ////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT
 // random values sending through sendBlinkBit
-#define CUSTOM_BLINK1  (0x255)
-#define CUSTOM_BLINK1  (0x255)
+#define CUSTOM_BLINK_BYTE1  (123)
+#define CUSTOM_BLINK_BYTE2  (26)
 ////////////////////////////////////////////////////////
-
-
-
-// special function checking whether software was uploaded correctly   
-// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               
-void sendBlinkBit(tByte bSend){                                        
-   if(bSend != 0){                                                     
-       mTX.dwIdentifier = 0x400;                                       
-       mTX.bLength = 1;                                                
-       mTX.bIs29Bit = 0;                                               
-		mTX.abData[0] = 0x3;
-       APIFTM_bSendCANMessage(&mTX);                                   
-   }                                                                   
-}																		
+											
+// special function checking whether software was uploaded correctly    
+// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT                
+void sendBlinkBit(tByte bSend){                                         
+	if(bSend != 0){                                                     
+		mTX.dwIdentifier = 0x400;                                       
+		mTX.bLength = 2;                                                
+		mTX.bIs29Bit = 0;                                               
+		mTX.abData[0] = CUSTOM_BLINK_BYTE1;							    
+		mTX.abData[1] = CUSTOM_BLINK_BYTE2;							    
+		APIFTM_bSendCANMessage(&mTX);								    
+	}																    
+}																	    
 void fCAN_STATES2(tByte bSend) {
 	if (bSend != 0) {
 		tByte Data0 = 0;
@@ -718,10 +716,11 @@ void fCAN_BATTERY2(tByte bSend) {
 }
 
 void vCAN_TX_Custom(void){
-																		
-		// execution of special function sendBlinkBit					
-		// THIS CODE IS GENERATED AUTOMATICALLY							
-		sendBlinkBit((tByte)(GET_TIMER_CAN == 12));																								
+											
+// timer for special function sendBlinkBit							    
+// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT                
+	sendBlinkBit((tByte)(GET_TIMER_CAN == 12));							
+																											
 																		
 
 																					
@@ -773,6 +772,26 @@ Byte)(GET_TIMER_CAN == 6));
 	fCAN_BATTERY1((tByte)(GET_TIMER_CAN == 12));
 	fCAN_BATTERY2((tByte)(GET_TIMER_CAN == 14));
 	fCAN_CENTRALLOCK((tByte)(GET_TIMER_CAN == 16));
+
+
+
+
+	if (GET_TIMER_CAN >= 18){
+		SET_TIMER_CAN(0);
+	}
+	else{
+		INCREMENT_TIMER_CAN;
+	}
+
+}
+
+
+
+
+
+
+#endif
+);
 
 
 

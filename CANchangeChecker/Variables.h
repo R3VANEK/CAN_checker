@@ -1,7 +1,6 @@
 #ifndef _VARIABLES_H_
 #define _VARIABLES_H_
 
-#include <string>
 
 
 
@@ -22,53 +21,53 @@ std::string MODIFICATION_ERROR_MESSAGE;
 
 
 
-// struct for storing read data from 'licznik.txt' file
-struct configurationData {
-
-	int NUMBER_COMPILE;
-	int BLINK_BIT_CURRENT_DECIMAL;
-
-} config_data_container;
-
+// global struct for storing read data from 'licznik.txt' file
+struct ConfigData {
+	unsigned int compile_time = 0;
+	unsigned int random_byte1;
+	unsigned int random_byte2;
+} CONFIG_DATA_CONTAINER;
 
 
 
 
-#define BEGINNINGTEXT					"																				\n\
-										//****************************************************************************//\n\
-										//                                                                            //\n\
-										//   Header file for including of Timers                                      //\n\
-										//   Filename: CustomCANTx.h.h                                                //\n\
-										//   Date: 03.03.2015                                                         //\n\
-										//   Time: 11:04:24                                                           //\n\
-										//                                                                            //\n\
-										//****************************************************************************//\n\
-										                                                                                \n\
-										#ifndef __CUSTOMCANTX_H__														\n\
-										#define __CUSTOMCANTX_H__                                                       \n\
-										                                                                                \n";
+
+#define BEGINNINGTEXT	"														\n\
+//****************************************************************************//\n\
+//                                                                            //\n\
+//   Header file for including of Timers                                      //\n\
+//   Filename: CustomCANTx.h.h                                                //\n\
+//   Date: 03.03.2015                                                         //\n\
+//   Time: 11:04:24                                                           //\n\
+//                                                                            //\n\
+//****************************************************************************//\n\
+										                                        \n\
+#ifndef __CUSTOMCANTX_H__														\n\
+#define __CUSTOMCANTX_H__                                                       \n\
+										                                        \n";
 
 
 
-#define CUSTOMBLINK_METHOD				"																	   \n\
-										// special function checking whether software was uploaded correctly   \n\
-										// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT               \n\
-										void sendBlinkBit(tByte bSend){                                        \n\
-										   if(bSend != 0){                                                     \n\
-										       mTX.dwIdentifier = 0x400;                                       \n\
-										       mTX.bLength = 2;                                                \n\
-										       mTX.bIs29Bit = 0;                                               \n\
-											   mTX.abData[0] = CUSTOM_BLINK_BYTE1;							   \n\
-											   mTX.abData[1] = CUSTOM_BLINK_BYTE2;							   \n\
-											   APIFTM_bSendCANMessage(&mTX);								   \n\
-											}																   \n\
-										}																	   \n";				
+#define CUSTOMBLINK_METHOD	"											\n\
+// special function checking whether software was uploaded correctly    \n\
+// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT                \n\
+void sendBlinkBit(tByte bSend){                                         \n\
+	if(bSend != 0){                                                     \n\
+		mTX.dwIdentifier = 0x400;                                       \n\
+		mTX.bLength = 2;                                                \n\
+		mTX.bIs29Bit = 0;                                               \n\
+		mTX.abData[0] = CUSTOM_BLINK_BYTE1;							    \n\
+		mTX.abData[1] = CUSTOM_BLINK_BYTE2;							    \n\
+		APIFTM_bSendCANMessage(&mTX);								    \n\
+	}																    \n\
+}																	    \n";				
 									
 
 
-#define CUSTOMBLINK_TIMER				"	// execution of special function sendBlinkBit					\n\
-											// THIS CODE IS GENERATED AUTOMATICALLY							\n\
-												sendBlinkBit((tByte)(GET_TIMER_CAN == 12));					";
+#define CUSTOMBLINK_TIMER	"											\n\
+	// timer for special function sendBlinkBit							\n\
+	// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT            \n\
+	sendBlinkBit((tByte)(GET_TIMER_CAN == 12));							\n";
 
 
 
