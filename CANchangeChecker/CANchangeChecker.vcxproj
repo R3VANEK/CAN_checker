@@ -154,6 +154,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConfigFunctions.h" />
     <ClInclude Include="HeaderFunctions.h" />
+    <ClInclude Include="Other.h" />
     <ClInclude Include="OtherFunctions.h" />
     <ClInclude Include="Variables.h" />
   </ItemGroup>

@@ -2,20 +2,16 @@
 #define _CONFIG_H
 
 
-#include <fstream>
-#include "Variables.h"
-#include <windows.h>
 
 
 
 
-// zrobiæ parenta z metodami na wypisywanie b³êdów
-class Config {
+
+class Config : public ConsolePrint{
 
 	private:
 		std::ifstream configFile;
 		std::ofstream configFileWrite;
-		bool is_BlinkingBit = false;
 
 
 	public :
@@ -30,7 +26,7 @@ class Config {
 
 			if (!configFile.is_open()) {
 				// there is no point trying to create new file as function updateConfig do this anyway
-				printf("ERROR OPENING CONFIG FILE, CREATING NEW ONE...");
+				printColorMessage("ERROR OPENING licznik.txt FILE, IT WILL BE CREATED FROM SCRATCH", ConsolePrint::c_WARNING);
 			}
 			else {
 				while (getline(configFile, line)) {
@@ -41,13 +37,16 @@ class Config {
 							CONFIG_DATA_CONTAINER.compile_time = std::stoi(line.substr(29, std::string::npos));
 						}
 						catch (std::invalid_argument a) {
-							printf("ERROR READING COMPILE NUMBER, IT WILL BE 0");
+							printColorMessage("- ERROR READING COMPILE NUMBER, IT WILL BE 0", ConsolePrint::c_WARNING);
 							// NOT A CRITICAL ERROR, MOVE ON;
 						}		
 						break;
 					}
 				}
+
+				printColorMessage("READ licznik.txt FILE SUCCESS", ConsolePrint::c_SUCCESS);
 			}
+
 			configFile.close();
 		}
 
@@ -58,14 +57,15 @@ class Config {
 			configFileWrite.open(PATH_CONFIG_FILE);
 
 			if (!configFileWrite.is_open()) {
-				printf("ERROR OPENING FILE AFTER MODIFICATIONS, PLEASE MODIFY IT MANUALLY");
-				// NOT A FATAL ERROR
+				printColorMessage("ERROR OPENING licnzik.txt FILE AFTER MODIFICATIONS, PLEASE UPDATE IT MANUALLY", ConsolePrint::c_WARNING);
 			}
 			else {
 				configFileWrite << "Liczba kompilacji projektu : " << CONFIG_DATA_CONTAINER.compile_time << "\n";
 				configFileWrite << "Losowa liczba wysy³ana na bajcie 1 : " << CONFIG_DATA_CONTAINER.random_byte1 << "\n";
 				configFileWrite << "Losowa liczba wysy³ana po bajcie 2 : " << CONFIG_DATA_CONTAINER.random_byte2 << "\n";
 			}
+
+			printColorMessage("UPDATING licznik.txt WITH SUCCESS", ConsolePrint::c_SUCCESS);
 			configFileWrite.close();
 		}
 

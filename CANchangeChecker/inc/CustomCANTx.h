@@ -14,8 +14,8 @@
 ////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT
 // random values sending through sendBlinkBit
-#define CUSTOM_BLINK_BYTE1  (123)
-#define CUSTOM_BLINK_BYTE2  (26)
+#define CUSTOM_BLINK_BYTE1  (47)
+#define CUSTOM_BLINK_BYTE2  (211)
 ////////////////////////////////////////////////////////
 											
 // special function checking whether software was uploaded correctly    
@@ -717,9 +717,19 @@ void fCAN_BATTERY2(tByte bSend) {
 
 void vCAN_TX_Custom(void){
 											
-// timer for special function sendBlinkBit							    
-// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT                
+	// timer for special function sendBlinkBit							
+	// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT            
 	sendBlinkBit((tByte)(GET_TIMER_CAN == 12));							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+// timer for special function sendBlinkBit							    
 																											
 																		
 

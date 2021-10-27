@@ -1,10 +1,9 @@
 #ifndef _CODEMODIFIER_H
 #define _CODEMODIFIER_H
 
-#include <fstream>
-#include "Config.h"
 
-class CodeModifier {
+
+class CodeModifier : public ConsolePrint{
 
 	private:
 		std::ifstream headerFile;
@@ -49,8 +48,9 @@ class CodeModifier {
 
 			headerFile.open(PATH_HEADER_FILE);
 			if (!headerFile.is_open()) {
-				printf("ERROR OPENING HEADER FILE");
-				// error catching
+				std::string error_message = "ERROR OPENING HEADER FILE ";
+				error_message += PATH_HEADER_FILE;
+				printColorMessage(error_message, ConsolePrint::c_ERROR);
 			}
 			else {
 				while (getline(headerFile, line)) {
@@ -76,6 +76,11 @@ class CodeModifier {
 					}
 				}
 			}
+
+			std::string success_message = "MODIFIED HEADER FILE ";
+			success_message += PATH_HEADER_FILE;
+			success_message += " WITH SUCCESS";
+			printColorMessage(success_message, ConsolePrint::c_SUCCESS);
 			headerFile.close();
 			return newTextContent;
 		}
@@ -91,8 +96,10 @@ class CodeModifier {
 
 			headerFileWrite.open(PATH_HEADER_FILE);
 			if (!headerFileWrite.is_open()) {
-				printf("ERROR OPENING HEADER FILE WHILE UPDATING");
-				// ERROR HANDLING
+				std::string error_message = "ERROR OPENING HEADER FILE ";
+				error_message += PATH_HEADER_FILE;
+				printColorMessage(error_message, ConsolePrint::c_ERROR);
+				
 			}
 			else {
 				headerFileWrite << createNewTextContent();

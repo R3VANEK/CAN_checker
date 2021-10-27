@@ -14,7 +14,7 @@
 bool MODIFICATION_ERROR_STATUS = false;
 bool COMPILATION_ERROR_STATUS = false;
 
-HANDLE Console_Handle;
+HANDLE CONSOLE_HANDLE = GetStdHandle(STD_OUTPUT_HANDLE);
 
 std::string MODIFICATION_ERROR_MESSAGE;
 #define COMPILATION_ERROR_MESSAGE "  - COMPILATION ERROR CODES ARE DISPLAYED HIGHER (IF MODIFICATION IS SUCCESS)\n  - PLEASE FIX COMPILATION AND/OR MODIFICATION ERRORS\n  - DO NOT CHANGE 'licznik.txt'\n";
@@ -24,8 +24,8 @@ std::string MODIFICATION_ERROR_MESSAGE;
 // global struct for storing read data from 'licznik.txt' file
 struct ConfigData {
 	unsigned int compile_time = 0;
-	unsigned int random_byte1;
-	unsigned int random_byte2;
+	unsigned int random_byte1 = 0;
+	unsigned int random_byte2 = 0;
 } CONFIG_DATA_CONTAINER;
 
 
