@@ -14,8 +14,8 @@
 ////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT
 // random values sending through sendBlinkBit
-#define CUSTOM_BLINK_BYTE1  (47)
-#define CUSTOM_BLINK_BYTE2  (211)
+#define CUSTOM_BLINK_BYTE1  (177)
+#define CUSTOM_BLINK_BYTE2  (202)
 ////////////////////////////////////////////////////////
 											
 // special function checking whether software was uploaded correctly    
@@ -720,6 +720,64 @@ void vCAN_TX_Custom(void){
 	// timer for special function sendBlinkBit							
 	// THIS CODE IS GENERATED AUTOMATICALLY DO NOT CHANGE IT            
 	sendBlinkBit((tByte)(GET_TIMER_CAN == 12));							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
+											
+	// timer for special function sendBlinkBit							
 											
 	// timer for special function sendBlinkBit							
 											

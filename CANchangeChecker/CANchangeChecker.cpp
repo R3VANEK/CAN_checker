@@ -33,11 +33,15 @@ int main()
         code.updateHeaderFile();
         
         // uruchomienie kompilatora
+        runCompilator();
 
         config.updateConfig();
 
-        
-    
+        std::cout << "\n\n" << "Please upload program to miunske and conect CANFOX to computer\n";
+        std::cout << "When you are ready click any button";
+
+
+        system("pause");
     
     
 

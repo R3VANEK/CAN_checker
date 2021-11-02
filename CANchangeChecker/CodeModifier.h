@@ -48,9 +48,7 @@ class CodeModifier : public ConsolePrint{
 
 			headerFile.open(PATH_HEADER_FILE);
 			if (!headerFile.is_open()) {
-				std::string error_message = "ERROR OPENING HEADER FILE ";
-				error_message += PATH_HEADER_FILE;
-				printColorMessage(error_message, ConsolePrint::c_ERROR);
+				printColorMessage("ERROR", "could not open file for reading", ConsolePrint::c_ERROR);
 			}
 			else {
 				while (getline(headerFile, line)) {
@@ -76,11 +74,6 @@ class CodeModifier : public ConsolePrint{
 					}
 				}
 			}
-
-			std::string success_message = "MODIFIED HEADER FILE ";
-			success_message += PATH_HEADER_FILE;
-			success_message += " WITH SUCCESS";
-			printColorMessage(success_message, ConsolePrint::c_SUCCESS);
 			headerFile.close();
 			return newTextContent;
 		}
@@ -94,16 +87,19 @@ class CodeModifier : public ConsolePrint{
 		
 		void updateHeaderFile() {
 
+			std::cout << "updating " << PATH_HEADER_FILE << " file : ";
+
 			headerFileWrite.open(PATH_HEADER_FILE);
 			if (!headerFileWrite.is_open()) {
-				std::string error_message = "ERROR OPENING HEADER FILE ";
-				error_message += PATH_HEADER_FILE;
-				printColorMessage(error_message, ConsolePrint::c_ERROR);
+				printColorMessage("ERROR", "could not open file for updating", ConsolePrint::c_ERROR);
 				
 			}
 			else {
 				headerFileWrite << createNewTextContent();
 				headerFileWrite.close();
+
+				printColorMessage("SUCCESS", "", ConsolePrint::c_SUCCESS);
+
 			}
 		}
 };
